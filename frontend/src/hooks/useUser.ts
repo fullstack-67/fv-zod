@@ -1,8 +1,8 @@
-import useStore from "./store";
+import useStore from "../utils/store";
 import { useEffect } from "react";
 import axios from "axios";
-import { URL_DATA, URL_DATA_WRONG } from "./env";
-import { type User, usersSchema } from "./types";
+import { URL_DATA, URL_DATA_WRONG } from "../utils/env";
+import { type User, usersSchema } from "../utils/types";
 
 function useUsers(right: boolean) {
   const [users, setUsers, setFetchUsers, error, setError] = useStore(
@@ -18,6 +18,7 @@ function useUsers(right: boolean) {
   async function fetchUsers() {
     const URL = right ? URL_DATA : URL_DATA_WRONG;
     const res = await axios.get<User[]>(URL);
+    console.log(res.data);
     const result = usersSchema.safeParse(res.data);
 
     if (!result.success) {

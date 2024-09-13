@@ -41,42 +41,77 @@ app.use(cors({ origin: false }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const apiDoc = {
-  swagger: "2.0",
-  basePath: "/v1",
-  info: {
-    title: "A getting started API.",
-    version: "1.0.0",
-  },
-  definitions: {
-    World: {
-      type: "object",
-      properties: {
-        name: {
-          description: "The name of this world.",
-          type: "string",
-        },
-      },
-      required: ["name"],
-    },
-  },
-  paths: {},
-};
+// const apiDoc = {
+//   swagger: "2.0",
+//   basePath: "/v1",
+//   info: {
+//     title: "A getting started API.",
+//     version: "1.0.0",
+//   },
+//   definitions: {
+//     World: {
+//       type: "object",
+//       properties: {
+//         name: {
+//           description: "The name of this world.",
+//           type: "string",
+//         },
+//       },
+//       required: ["name"],
+//     },
+//   },
+//   paths: {},
+// };
 
-initialize({
-  app,
-  // NOTE: If using yaml you can provide a path relative to process.cwd() e.g.
-  // apiDoc: './api-v1/api-doc.yml',
-  apiDoc: apiDoc,
-  paths: "./api-v1/paths",
-});
+// initialize({
+//   app,
+//   // NOTE: If using yaml you can provide a path relative to process.cwd() e.g.
+//   // apiDoc: './api-v1/api-doc.yml',
+//   apiDoc: apiDoc,
+//   paths: "./api-v1/paths",
+// });
 
 // * Endpoints
+const initData = [
+  {
+    id: 1,
+    firstName: "John",
+    lastName: "Doe",
+    dateOfBirth: dayjs("1980-01-01").format("YYYY-MM-DD"),
+    email: "join_doe@example.com",
+  },
+  {
+    id: 2,
+    firstName: "Sarah",
+    lastName: "Smith",
+    dateOfBirth: dayjs("1975-07-26").format("YYYY-MM-DD"),
+    email: "sarah_smith@example.com",
+  },
+];
+let data = [...initData];
+
+app.get("/users", (req, res) => {
+  res.json(data);
+});
+0;
 
 app.post("/user", validateData(userSchema), async (req, res, next) => {
   // const dtStr = dayjs().format("DD/MM/YYYY HH:mm:ss");
   const dtStr = dayjs().format("HH:mm:ss");
   res.json({ data: dtStr });
+});
+
+app.get("/users_wrong", (req, res) => {
+  const dataNew = data.map((d) => {
+    const { firstName, lastName, dateOfBirth, ...rest } = d;
+    return {
+      ...rest,
+      firstname: firstName,
+      lastname: lastName,
+      dateOfBirth: dayjs(dateOfBirth).add(543, "year").format("YYYY-MM-DD"),
+    };
+  });
+  res.send(dataNew);
 });
 
 // * Running app

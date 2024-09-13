@@ -6,8 +6,6 @@ import { formSchema, type Form } from "../utils/types";
 import { URL_DATA } from "../utils/env";
 import { getInitData } from "../utils/helper";
 
-Modal.setAppElement("#root");
-
 const FormVanilla: FC = () => {
   const [open, setOpen, fetchUsers] = useStore((state) => [
     state.open,
