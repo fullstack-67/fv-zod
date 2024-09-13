@@ -1,40 +1,41 @@
-import useStore from "../utils/store";
+import useStore from "./store";
 import { useEffect } from "react";
 import axios from "axios";
 import { URL_DATA, URL_DATA_WRONG } from "../utils/env";
 import { type User, usersSchema } from "../utils/types";
+import { useQuery } from "@tanstack/react-query";
 
 function useUsers(right: boolean) {
-  const [users, setUsers, setFetchUsers, error, setError] = useStore(
-    (state) => [
-      state.users,
-      state.setUsers,
-      state.setFetchUsers,
-      state.error,
-      state.setError,
-    ]
-  );
+  const [setUsers, setFetchUsers, setError] = useStore((state) => [
+    state.setUsers,
+    state.setFetchUsers,
+    state.setError,
+  ]);
 
   async function fetchUsers() {
     const URL = right ? URL_DATA : URL_DATA_WRONG;
     const res = await axios.get<User[]>(URL);
-    console.log(res.data);
     const result = usersSchema.safeParse(res.data);
 
     if (!result.success) {
       console.log({ error: result.error.issues });
-      setError(JSON.stringify(result.error.issues));
-      return;
+      const errorMsg = JSON.stringify(result.error.issues);
+      setError(errorMsg);
+      return Promise.reject(errorMsg);
     }
     setUsers(result.data);
+    return null; // I don't need react query to return data.
   }
 
-  useEffect(() => {
-    fetchUsers();
-    setFetchUsers(fetchUsers);
-  }, []);
+  const query = useQuery({
+    queryKey: ["users"],
+    queryFn: fetchUsers,
+    refetchInterval: 1000,
+  });
 
-  return { users, error };
+  useEffect(() => {
+    setFetchUsers(query.refetch);
+  }, []);
 }
 
 export default useUsers;

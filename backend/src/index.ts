@@ -96,10 +96,10 @@ app.get("/users", (req, res) => {
 0;
 
 app.post("/users", validateData(userSchema), async (req, res, next) => {
-  const { password, confirmPassword, ...rest } = req.body;
-  const newData = { id: data.length + 1, ...rest };
-  data = [newData, ...data];
   setTimeout(() => {
+    const { password, confirmPassword, ...rest } = req.body;
+    const newData = { id: data.length + 1, ...rest };
+    data = [newData, ...data];
     return res.send({ status: "success" });
   }, 2000);
 });

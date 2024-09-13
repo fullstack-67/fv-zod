@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { type User } from "./types";
+import { type User } from "../utils/types";
 interface Store {
   open: boolean;
   setOpen: (open: boolean) => void;

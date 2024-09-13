@@ -1,10 +1,26 @@
 import { FC, useState, useEffect, ChangeEvent } from "react";
 import Modal, { Styles } from "react-modal";
-import useStore from "../utils/store";
+import useStore from "../hooks/store";
 import axios from "axios";
 import { formSchema, type Form } from "../utils/types";
 import { URL_DATA } from "../utils/env";
 import { getInitData } from "../utils/helper";
+
+const modalStyles: Styles = {
+  overlay: {
+    backdropFilter: "blur(2px)",
+  },
+  content: {
+    background: "#181C25",
+    overflowY: "auto",
+    width: "80%",
+    height: "80%",
+    transform: "translate(10%, 10%)",
+    borderRadius: "0.75rem",
+    borderColor: "#48536B",
+    padding: "2rem",
+  },
+};
 
 const FormVanilla: FC = () => {
   const [open, setOpen, fetchUsers] = useStore((state) => [
@@ -69,7 +85,7 @@ const FormVanilla: FC = () => {
       return;
     }
     try {
-      const res = await axios.post(URL_DATA, values);
+      await axios.post(URL_DATA, values);
       setOpen(false);
       fetchUsers();
       reset();
@@ -78,24 +94,10 @@ const FormVanilla: FC = () => {
       setError(err?.message || "Error sending data");
     }
   }
-  const customStyles: Styles = {
-    overlay: {
-      backdropFilter: "blur(2px)",
-    },
-    content: {
-      background: "#181C25",
-      overflowY: "auto",
-      width: "80%",
-      height: "80%",
-      transform: "translate(10%, 10%)",
-      borderRadius: "0.75rem",
-      borderColor: "#48536B",
-      padding: "2rem",
-    },
-  };
+
   return (
     <div id="form">
-      <Modal isOpen={open} style={customStyles}>
+      <Modal isOpen={open} style={modalStyles}>
         <form onSubmit={sendData}>
           <div>
             <label htmlFor="firstName">First Name</label>
