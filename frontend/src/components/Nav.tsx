@@ -1,5 +1,4 @@
 import { FC } from "react";
-import Clock from "./Clock";
 const Nav: FC = () => {
   return (
     <header style={{ padding: "1rem 0" }}>
@@ -12,9 +11,7 @@ const Nav: FC = () => {
           </li>
         </ul>
         <ul>
-          <li>
-            <Clock />
-          </li>
+          <li></li>
         </ul>
       </nav>
     </header>
