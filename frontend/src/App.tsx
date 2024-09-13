@@ -13,11 +13,13 @@ function App() {
   return (
     <div className="container">
       <Nav />
+      <div>
+        <button onClick={() => setOpen(true)}>Add</button>
+        {users.map((user) => (
+          <UserList key={user.id} user={user} />
+        ))}
+      </div>
       <FormVanilla />
-      <button onClick={() => setOpen(true)}>Add</button>
-      {users.map((user) => (
-        <UserList key={user.id} user={user} />
-      ))}
     </div>
   );
 }

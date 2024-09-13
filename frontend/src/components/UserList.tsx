@@ -7,12 +7,12 @@ interface Props {
 
 const UserList: FC<Props> = ({ user }) => {
   return (
-    <div>
+    <article>
       <div>{user.firstName}</div>
       <div>{user.lastName}</div>
       <div>{user.email}</div>
       <div>{user.dateOfBirth}</div>
-    </div>
+    </article>
   );
 };
 
