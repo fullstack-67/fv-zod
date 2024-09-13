@@ -4,7 +4,6 @@ import useStore from "./utils/store";
 import useUsers from "./hooks/useUser";
 import UserList from "./components/UserList";
 import Modal from "react-modal";
-
 Modal.setAppElement("#root");
 
 function App() {

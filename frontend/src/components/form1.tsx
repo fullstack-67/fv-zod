@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, ChangeEvent } from "react";
-import Modal from "react-modal";
+import Modal, { Styles } from "react-modal";
 import useStore from "../utils/store";
 import axios from "axios";
 import { formSchema, type Form } from "../utils/types";
@@ -78,10 +78,24 @@ const FormVanilla: FC = () => {
       setError(err?.message || "Error sending data");
     }
   }
-
+  const customStyles: Styles = {
+    overlay: {
+      backdropFilter: "blur(2px)",
+    },
+    content: {
+      background: "#181C25",
+      overflowY: "auto",
+      width: "80%",
+      height: "80%",
+      transform: "translate(10%, 10%)",
+      borderRadius: "0.75rem",
+      borderColor: "#48536B",
+      padding: "2rem",
+    },
+  };
   return (
     <div id="form">
-      <Modal isOpen={open}>
+      <Modal isOpen={open} style={customStyles}>
         <form onSubmit={sendData}>
           <div>
             <label htmlFor="firstName">First Name</label>

@@ -95,10 +95,13 @@ app.get("/users", (req, res) => {
 });
 0;
 
-app.post("/user", validateData(userSchema), async (req, res, next) => {
-  // const dtStr = dayjs().format("DD/MM/YYYY HH:mm:ss");
-  const dtStr = dayjs().format("HH:mm:ss");
-  res.json({ data: dtStr });
+app.post("/users", validateData(userSchema), async (req, res, next) => {
+  const { password, confirmPassword, ...rest } = req.body;
+  const newData = { id: data.length + 1, ...rest };
+  data = [newData, ...data];
+  setTimeout(() => {
+    return res.send({ status: "success" });
+  }, 2000);
 });
 
 app.get("/users_wrong", (req, res) => {
