@@ -7,6 +7,7 @@ import axios from "axios";
 import { formSchema, type Form } from "../utils/types";
 import { URL_DATA } from "../utils/env";
 import { getInitData } from "../utils/helper";
+import dayjs from "dayjs";
 
 const modalStyles: Styles = {
   overlay: {
@@ -33,7 +34,7 @@ const FormRHF = () => {
 
   const rhf = useForm<Form>({
     resolver: zodResolver(formSchema),
-    defaultValues: getInitData(true),
+    defaultValues: getInitData(false),
     mode: "onTouched", // Try onSubmit
   });
   const { register, handleSubmit, watch, reset, setValue, formState } = rhf;
@@ -41,11 +42,15 @@ const FormRHF = () => {
   // const values = watch();
 
   async function sendData(data: Form) {
+    const dataMod = {
+      ...data,
+      dateOfBirth: dayjs(data.dateOfBirth).format("YYYY-MM-DD"),
+    };
     try {
-      await axios.post(URL_DATA, data);
+      await axios.post(URL_DATA, dataMod);
       setOpen(false);
       fetchUsers();
-      reset(getInitData(true));
+      reset(getInitData(false));
     } catch (err) {
       console.log(err);
     }

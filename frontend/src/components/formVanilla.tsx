@@ -5,6 +5,7 @@ import axios from "axios";
 import { formSchema, type Form } from "../utils/types";
 import { URL_DATA } from "../utils/env";
 import { getInitData } from "../utils/helper";
+import dayjs from "dayjs";
 
 const modalStyles: Styles = {
   overlay: {
@@ -84,8 +85,15 @@ const FormVanilla: FC = () => {
       setError(JSON.stringify(result.error.issues));
       return;
     }
+
+    // Format date before sending
+    const valueMod = {
+      ...values,
+      dateOfBirth: dayjs(values.dateOfBirth).format("YYYY-MM-DD"),
+    };
+
     try {
-      await axios.post(URL_DATA, values);
+      await axios.post(URL_DATA, valueMod);
       setOpen(false);
       fetchUsers();
       reset();

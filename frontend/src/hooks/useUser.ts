@@ -23,7 +23,9 @@ function useUsers(right: boolean) {
       setError(errorMsg);
       return Promise.reject(errorMsg);
     }
-    setUsers(result.data);
+
+    const usersSorted = result.data.sort((a, b) => b.createdAt - a.createdAt);
+    setUsers(usersSorted);
     return null; // I don't need react query to return data.
   }
 
