@@ -41,36 +41,6 @@ app.use(cors({ origin: false }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// const apiDoc = {
-//   swagger: "2.0",
-//   basePath: "/v1",
-//   info: {
-//     title: "A getting started API.",
-//     version: "1.0.0",
-//   },
-//   definitions: {
-//     World: {
-//       type: "object",
-//       properties: {
-//         name: {
-//           description: "The name of this world.",
-//           type: "string",
-//         },
-//       },
-//       required: ["name"],
-//     },
-//   },
-//   paths: {},
-// };
-
-// initialize({
-//   app,
-//   // NOTE: If using yaml you can provide a path relative to process.cwd() e.g.
-//   // apiDoc: './api-v1/api-doc.yml',
-//   apiDoc: apiDoc,
-//   paths: "./api-v1/paths",
-// });
-
 // * Endpoints
 const initData = [
   {
