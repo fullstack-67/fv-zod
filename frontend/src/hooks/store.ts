@@ -1,8 +1,10 @@
 import { create } from "zustand";
 import { type User } from "../utils/types";
 interface Store {
-  open: boolean;
-  setOpen: (open: boolean) => void;
+  openVN: boolean;
+  setOpenVN: (open: boolean) => void;
+  openRHF: boolean;
+  setOpenRHF: (open: boolean) => void;
   users: User[];
   setUsers: (users: User[]) => void;
   fetchUsers: () => void;
@@ -12,8 +14,10 @@ interface Store {
 }
 
 const useStore = create<Store>((set) => ({
-  open: false,
-  setOpen: (open) => set({ open }),
+  openVN: false,
+  setOpenVN: (open) => set({ openVN: open }),
+  openRHF: false,
+  setOpenRHF: (open) => set({ openRHF: open }),
   users: [],
   setUsers: (users) => set({ users }),
   fetchUsers: () => {},

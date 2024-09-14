@@ -14,7 +14,7 @@ const modalStyles: Styles = {
     background: "#181C25",
     overflowY: "auto",
     width: "80%",
-    height: "80%",
+    height: "fit-content",
     transform: "translate(10%, 10%)",
     borderRadius: "0.75rem",
     borderColor: "#48536B",
@@ -24,8 +24,8 @@ const modalStyles: Styles = {
 
 const FormVanilla: FC = () => {
   const [open, setOpen, fetchUsers] = useStore((state) => [
-    state.open,
-    state.setOpen,
+    state.openVN,
+    state.setOpenVN,
     state.fetchUsers,
   ]);
 
@@ -99,74 +99,81 @@ const FormVanilla: FC = () => {
     <div id="form">
       <Modal isOpen={open} style={modalStyles}>
         <form onSubmit={sendData}>
-          <div>
-            <label htmlFor="firstName">First Name</label>
-            <input
-              type="text"
-              id="firstName"
-              value={firstName}
-              onChange={onChange}
-            />
+          <h1>Form (Vanilla)</h1>
+          <div className="grid">
+            <div>
+              <label htmlFor="firstName">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                value={firstName}
+                onChange={onChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="lastName">Last Name</label>
+              <input
+                type="text"
+                id="lastName"
+                value={lastName}
+                onChange={onChange}
+              />
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="lastName">Last Name</label>
-            <input
-              type="text"
-              id="lastName"
-              value={lastName}
-              onChange={onChange}
-            />
+          <div className="grid">
+            <div>
+              <label htmlFor="email">Email</label>
+              <input type="text" id="email" value={email} onChange={onChange} />
+            </div>
+
+            <div>
+              <label htmlFor="dateOfBirth">Date of Birth</label>
+              <input
+                type="text"
+                id="dateOfBirth"
+                value={dateOfBirth}
+                onChange={onChange}
+              />
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="email">Email</label>
-            <input type="text" id="email" value={email} onChange={onChange} />
-          </div>
-
-          <div>
-            <label htmlFor="dateOfBirth">Date of Birth</label>
-            <input
-              type="text"
-              id="dateOfBirth"
-              value={dateOfBirth}
-              onChange={onChange}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={onChange}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={onChange}
-            />
+          <div className="grid">
+            <div>
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={onChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={onChange}
+              />
+            </div>
           </div>
 
           {/* {JSON.stringify(values)} */}
+          <div className="pico-color-red-650">{error}</div>
 
-          <div className="text-red-500">{error}</div>
-
-          <button type="submit">Submit</button>
-          <button
-            onClick={() => {
-              setOpen(false);
-              reset();
-            }}
-          >
-            Close
-          </button>
+          <div className="grid" style={{ alignItems: "start" }}>
+            <button type="submit">Submit</button>
+            <button
+              className="secondary"
+              onClick={() => {
+                setOpen(false);
+                reset();
+              }}
+            >
+              Close
+            </button>
+          </div>
         </form>
       </Modal>
     </div>

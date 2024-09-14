@@ -1,8 +1,7 @@
-import Nav from "./components/Nav";
-import FormVanilla from "./components/form1";
-import FormRHF from "./components/form2";
 import useStore from "./hooks/store";
 import useUsers from "./hooks/useUser";
+import FormVanilla from "./components/formVanilla";
+import FormRHF from "./components/formRHF";
 import UserList from "./components/UserList";
 import Modal from "react-modal";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -10,22 +9,42 @@ Modal.setAppElement("#root");
 
 function App() {
   useUsers(true);
-  const [setOpen, users] = useStore((state) => [state.setOpen, state.users]);
-  const [parent, enableAnimations] = useAutoAnimate(/* optional config */);
-  console.log(users);
+  const [users, setOpenVN, setOpenRHF] = useStore((state) => [
+    state.users,
+    state.setOpenVN,
+    state.setOpenRHF,
+  ]);
+  const [parent] = useAutoAnimate(/* optional config */);
   return (
     <div className="container">
-      <Nav />
-      <div>
-        <button onClick={() => setOpen(true)}>Add</button>
-        <div ref={parent}>
-          {users.map((user) => (
-            <UserList key={user.id} user={user} />
-          ))}
-        </div>
+      {/* Navigation Bar */}
+      <header style={{ padding: "1rem 0" }}>
+        <nav>
+          <ul>
+            <li>
+              <a href="/" className="custom-icon">
+                <i className="fa-solid fa-xl fa-home"></i>
+              </a>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <button onClick={() => setOpenVN(true)}>Form Vanilla</button>
+            </li>
+            <li>
+              <button onClick={() => setOpenRHF(true)}>Form RHF</button>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      {/* Users */}
+      <div ref={parent}>
+        {users.map((user) => (
+          <UserList key={user.id} user={user} />
+        ))}
       </div>
-
-      {/* <FormVanilla /> */}
+      {/* Forms */}
+      <FormVanilla />
       <FormRHF />
     </div>
   );
