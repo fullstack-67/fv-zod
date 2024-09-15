@@ -1,4 +1,7 @@
 import { z } from "zod";
+import dayjs from "dayjs";
+
+const thisYear = dayjs().year();
 
 export const userSchema = z
   .object({
@@ -8,12 +11,28 @@ export const userSchema = z
     dateOfBirth: z
       .string()
       .min(1, { message: "Missing date of birth" })
-      .refine((s) => z.coerce.date().safeParse(s).success, {
-        message: "Invalid date of birth",
+      .regex(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/, {
+        message: "Use format YYYY-MM-DD.",
       })
-      .refine((s) => new Date(s) < new Date(), {
-        message: "Wrong calendar",
-      }),
+      // .refine((s) => z.coerce.date().safeParse(s).success, {
+      //   message: "Invalid date",
+      // })
+      .refine(
+        (s) => {
+          if (dayjs(s).year() > thisYear) return false;
+          return true;
+        },
+        {
+          message: "Wrong calendar",
+        }
+      )
+      .refine(
+        (s) => {
+          if (dayjs(s).year() < thisYear - 100) return false;
+          return true;
+        },
+        { message: "Year too far back" }
+      ),
     password: z.string().min(4, { message: "Password too short" }),
     confirmPassword: z.string().min(1, { message: "Confirm password" }),
   })

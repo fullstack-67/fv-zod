@@ -1,6 +1,8 @@
 import { FieldErrors } from "react-hook-form";
 import { type Form } from "./types";
 import { faker } from "@faker-js/faker";
+import { enableInitialFakeData } from "./env";
+import dayjs from "dayjs";
 
 export function getErrMsg(errors: FieldErrors<Form>) {
   const err: {
@@ -23,8 +25,8 @@ export function getErrMsg(errors: FieldErrors<Form>) {
   return err;
 }
 
-export function getInitData(blank = false): Form {
-  if (blank) {
+export function getInitData(): Form {
+  if (!enableInitialFakeData) {
     return {
       firstName: "",
       lastName: "",
@@ -36,15 +38,17 @@ export function getInitData(blank = false): Form {
   }
   const passwd = faker.internet.password();
   const dob = faker.date.past();
-  const day = dob.getDate();
-  const month = dob.getMonth();
-  const year = dob.getFullYear();
+
+  // const day = dob.getDate();
+  // const month = dob.getMonth();
+  // const year = dob.getFullYear();
 
   return {
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
     email: faker.internet.email(),
-    dateOfBirth: `${year}-${month}-${day}`,
+    // dateOfBirth: `${year}-${month}-${day}`,
+    dateOfBirth: dayjs(dob).format("YYYY-MM-DD"),
     password: passwd,
     confirmPassword: passwd,
   };

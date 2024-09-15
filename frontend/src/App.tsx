@@ -8,11 +8,12 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 Modal.setAppElement("#root");
 
 function App() {
-  useUsers(true);
-  const [users, setOpenVN, setOpenRHF] = useStore((state) => [
+  useUsers();
+  const [users, setOpenVN, setOpenRHF, error] = useStore((state) => [
     state.users,
     state.setOpenVN,
     state.setOpenRHF,
+    state.error,
   ]);
   const [parent] = useAutoAnimate(/* optional config */);
   return (
@@ -39,9 +40,27 @@ function App() {
       </header>
       {/* Users */}
       <div ref={parent}>
-        {users.map((user) => (
-          <UserList key={user.id} user={user} />
-        ))}
+        {!error ? (
+          users.map((user) => <UserList key={user.id} user={user} />)
+        ) : (
+          <article>
+            <div style={{ fontStyle: "italic" }}>
+              We’re currently experiencing a technical issue with our system.
+              Our team is working swiftly to resolve it and restore full
+              functionality. <br />
+              <br />
+              We apologize for any inconvenience this may cause and appreciate
+              your patience. Thank you for your understanding. We’ll provide an
+              update as soon as the issue is resolved. If you have any urgent
+              concerns, please contact our support team at{" "}
+              <a href="mailto: name@email.com">we-do-not-care@example.com</a>.
+              <br />
+              <br />
+              Best regards,
+              <br /> Example Company
+            </div>
+          </article>
+        )}
       </div>
       {/* Forms */}
       <FormVanilla />

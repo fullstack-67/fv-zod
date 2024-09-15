@@ -1,11 +1,11 @@
 import useStore from "./store";
 import { useEffect } from "react";
 import axios from "axios";
-import { URL_DATA, URL_DATA_WRONG } from "../utils/env";
+import { URL_DATA } from "../utils/env";
 import { type User, usersSchema } from "../utils/types";
 import { useQuery } from "@tanstack/react-query";
 
-function useUsers(right: boolean) {
+function useUsers() {
   const [setUsers, setFetchUsers, setError] = useStore((state) => [
     state.setUsers,
     state.setFetchUsers,
@@ -13,8 +13,7 @@ function useUsers(right: boolean) {
   ]);
 
   async function fetchUsers() {
-    const URL = right ? URL_DATA : URL_DATA_WRONG;
-    const res = await axios.get<User[]>(URL);
+    const res = await axios.get<User[]>(URL_DATA);
     const result = usersSchema.safeParse(res.data);
 
     if (!result.success) {

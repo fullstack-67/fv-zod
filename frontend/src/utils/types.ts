@@ -1,6 +1,8 @@
 import * as z from "zod";
 import dayjs from "dayjs";
 
+const thisYear = dayjs().year();
+
 const userSchema = z.object({
   id: z.string().min(1, { message: "Missing ID" }),
   createdAt: z.number(),
@@ -10,14 +12,15 @@ const userSchema = z.object({
   dateOfBirth: z
     .string()
     .min(1, { message: "Missing date of birth" })
-    .refine((s) => z.coerce.date().safeParse(s).success, {
-      message: "Invalid date of birth",
+    .regex(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/, {
+      message: "Use format YYYY-MM-DD.",
     })
+    // .refine((s) => z.coerce.date().safeParse(s).success, {
+    //   message: "Invalid date",
+    // })
     .refine(
       (s) => {
-        const yearNow = dayjs().year();
-        const year = dayjs(s).year();
-        if (year > yearNow) return false;
+        if (dayjs(s).year() > thisYear) return false;
         return true;
       },
       {
@@ -26,9 +29,7 @@ const userSchema = z.object({
     )
     .refine(
       (s) => {
-        const yearNow = dayjs().year();
-        const year = dayjs(s).year();
-        if (year < yearNow - 100) return false;
+        if (dayjs(s).year() < thisYear - 100) return false;
         return true;
       },
       { message: "Year too far back" }

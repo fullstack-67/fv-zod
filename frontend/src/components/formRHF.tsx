@@ -7,7 +7,7 @@ import axios from "axios";
 import { formSchema, type Form } from "../utils/types";
 import { URL_DATA } from "../utils/env";
 import { getInitData } from "../utils/helper";
-import dayjs from "dayjs";
+import styles from "../styles/style.module.css";
 
 const modalStyles: Styles = {
   overlay: {
@@ -34,7 +34,7 @@ const FormRHF = () => {
 
   const rhf = useForm<Form>({
     resolver: zodResolver(formSchema),
-    defaultValues: getInitData(false),
+    defaultValues: getInitData(),
     mode: "onTouched", // Try onSubmit
   });
   const { register, handleSubmit, watch, reset, setValue, formState } = rhf;
@@ -42,15 +42,11 @@ const FormRHF = () => {
   // const values = watch();
 
   async function sendData(data: Form) {
-    const dataMod = {
-      ...data,
-      dateOfBirth: dayjs(data.dateOfBirth).format("YYYY-MM-DD"),
-    };
     try {
-      await axios.post(URL_DATA, dataMod);
+      await axios.post(URL_DATA, data);
       setOpen(false);
       fetchUsers();
-      reset(getInitData(false));
+      reset(getInitData());
     } catch (err) {
       console.log(err);
     }
@@ -64,90 +60,123 @@ const FormRHF = () => {
           className="flex flex-col gap-2 items-start"
         >
           <h1>Form (React Hook Form)</h1>
-          <div className="grid">
-            <div>
-              <label htmlFor="firstName">First Name</label>
-              <input
-                {...register("firstName")}
-                type="text"
-                id="firstName"
-                disabled={isSubmitting}
-              />
-              <ErrorMessage errors={errors} name="firstName" />
-              {/* {errors.firstName?.message && errors.firstName?.message} */}
-            </div>
-            <div>
-              <label htmlFor="lastName">Last Name</label>
-              <input
-                {...register("lastName")}
-                type="text"
-                id="lastName"
-                disabled={isSubmitting}
-              />
-              <ErrorMessage errors={errors} name="lastName" />
-            </div>
-          </div>
-
-          <div className="grid">
-            <div>
-              <label htmlFor="email">Email</label>
-              <input
-                {...register("email")}
-                type="text"
-                id="email"
-                disabled={isSubmitting}
-              />
-              <ErrorMessage errors={errors} name="email" />
-            </div>
-            <div>
-              <label htmlFor="dateOfBirth">Date of Birth</label>
-              <input
-                {...register("dateOfBirth")}
-                type="text"
-                id="dateOfBirth"
-                disabled={isSubmitting}
-              />
-              <ErrorMessage errors={errors} name="dateOfBirth" />
-            </div>
-          </div>
-          <div className="grid">
-            <div>
-              <label htmlFor="password">Password</label>
-              <input
-                {...register("password")}
-                type="password"
-                id="password"
-                disabled={isSubmitting}
-              />
-              <ErrorMessage errors={errors} name="password" />
+          <div className={styles.formWrapper}>
+            <div className="grid">
+              <div>
+                <label htmlFor="firstName">First Name</label>
+                <input
+                  {...register("firstName")}
+                  type="text"
+                  id="firstName"
+                  disabled={isSubmitting}
+                  className={styles.noMB}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="firstName"
+                  as={<div className={styles.formError} />}
+                />
+                {/* {errors.firstName?.message && errors.firstName?.message} */}
+              </div>
+              <div>
+                <label htmlFor="lastName">Last Name</label>
+                <input
+                  {...register("lastName")}
+                  type="text"
+                  id="lastName"
+                  disabled={isSubmitting}
+                  className={styles.noMB}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="lastName"
+                  as={<div className={styles.formError} />}
+                />
+              </div>
             </div>
 
-            <div>
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input
-                {...register("confirmPassword")}
-                type="password"
-                id="confirmPassword"
-                disabled={isSubmitting}
-              />
-              <ErrorMessage errors={errors} name="confirmPassword" />
+            <div className="grid">
+              <div>
+                <label htmlFor="email">Email</label>
+                <input
+                  {...register("email")}
+                  type="text"
+                  id="email"
+                  disabled={isSubmitting}
+                  className={styles.noMB}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="email"
+                  as={<div className={styles.formError} />}
+                />
+              </div>
+              <div>
+                <label htmlFor="dateOfBirth">Date of Birth</label>
+                <input
+                  {...register("dateOfBirth")}
+                  type="text"
+                  id="dateOfBirth"
+                  disabled={isSubmitting}
+                  className={styles.noMB}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="dateOfBirth"
+                  as={<div className={styles.formError} />}
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="grid" style={{ alignItems: "start" }}>
-            <button type="submit" disabled={isSubmitting || !isValid}>
-              {formState.isSubmitting ? "Working" : "Submit"}
-            </button>
-            <button
-              onClick={() => {
-                setOpen(false);
-                reset(getInitData(false));
-              }}
-              disabled={isSubmitting}
-              className="secondary"
-            >
-              Close
-            </button>
+            <div className="grid">
+              <div>
+                <label htmlFor="password">Password</label>
+                <input
+                  {...register("password")}
+                  type="password"
+                  id="password"
+                  disabled={isSubmitting}
+                  className={styles.noMB}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="password"
+                  as={<div className={styles.formError} />}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                  {...register("confirmPassword")}
+                  type="password"
+                  id="confirmPassword"
+                  disabled={isSubmitting}
+                  className={styles.noMB}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="confirmPassword"
+                  as={<div className={styles.formError} />}
+                />
+              </div>
+            </div>
+
+            <div className="grid" style={{ alignItems: "start" }}>
+              <button type="submit" disabled={isSubmitting || !isValid}>
+                {formState.isSubmitting ? "Working" : "Submit"}
+              </button>
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  reset(getInitData());
+                }}
+                disabled={isSubmitting}
+                className="secondary"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </form>
 

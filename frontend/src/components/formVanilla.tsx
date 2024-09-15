@@ -5,7 +5,6 @@ import axios from "axios";
 import { formSchema, type Form } from "../utils/types";
 import { URL_DATA } from "../utils/env";
 import { getInitData } from "../utils/helper";
-import dayjs from "dayjs";
 
 const modalStyles: Styles = {
   overlay: {
@@ -48,8 +47,7 @@ const FormVanilla: FC = () => {
   }
 
   useEffect(() => {
-    console.log("open", open);
-    const initData = getInitData(false);
+    const initData = getInitData();
     setFirstName(initData.firstName);
     setLastName(initData.lastName);
     setEmail(initData.email);
@@ -82,18 +80,15 @@ const FormVanilla: FC = () => {
     const result = formSchema.safeParse(values);
     if (!result.success) {
       console.log(result);
-      setError(JSON.stringify(result.error.issues));
+      const errMsg = result.error.issues
+        .map((el) => `• [${el.path[0]}] - ${el.message}`)
+        .join("\n");
+      setError(errMsg);
       return;
     }
 
-    // Format date before sending
-    const valueMod = {
-      ...values,
-      dateOfBirth: dayjs(values.dateOfBirth).format("YYYY-MM-DD"),
-    };
-
     try {
-      await axios.post(URL_DATA, valueMod);
+      await axios.post(URL_DATA, values);
       setOpen(false);
       fetchUsers();
       reset();
@@ -168,7 +163,7 @@ const FormVanilla: FC = () => {
           </div>
 
           {/* {JSON.stringify(values)} */}
-          <div className="pico-color-red-650">{error}</div>
+          <pre className="pico-color-red-300">{error}</pre>
 
           <div className="grid" style={{ alignItems: "start" }}>
             <button type="submit">Submit</button>
