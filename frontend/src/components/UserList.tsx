@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { type User } from "../utils/types";
+import { type User } from "../utils/schema";
 
 interface Props {
   user: User;

@@ -2,20 +2,20 @@ import { FC, useState, useEffect, ChangeEvent } from "react";
 import Modal, { Styles } from "react-modal";
 import useStore from "../hooks/store";
 import axios from "axios";
-import { formSchema, type Form } from "../utils/types";
+import { formSchema } from "../utils/schema";
 import { URL_DATA } from "../utils/env";
-import { getInitData } from "../utils/helper";
+import { getInitData } from "../utils/helperFns";
 
 const modalStyles: Styles = {
   overlay: {
     backdropFilter: "blur(2px)",
+    overflowY: "scroll",
   },
   content: {
     background: "#181C25",
-    overflowY: "auto",
     width: "80%",
     height: "fit-content",
-    transform: "translate(10%, 10%)",
+    margin: "2rem auto",
     borderRadius: "0.75rem",
     borderColor: "#48536B",
     padding: "2rem",

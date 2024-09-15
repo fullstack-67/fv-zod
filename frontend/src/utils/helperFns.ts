@@ -1,5 +1,5 @@
 import { FieldErrors } from "react-hook-form";
-import { type Form } from "./types";
+import { type Form } from "./schema";
 import { faker } from "@faker-js/faker";
 import { enableInitialFakeData } from "./env";
 import dayjs from "dayjs";

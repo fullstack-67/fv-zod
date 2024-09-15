@@ -2,7 +2,7 @@ import useStore from "./store";
 import { useEffect } from "react";
 import axios from "axios";
 import { URL_DATA } from "../utils/env";
-import { type User, usersSchema } from "../utils/types";
+import { type User, usersSchema } from "../utils/schema";
 import { useQuery } from "@tanstack/react-query";
 
 function useUsers() {

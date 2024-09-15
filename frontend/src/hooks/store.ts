@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { type User } from "../utils/types";
+import { type User } from "../utils/schema";
 interface Store {
   openVN: boolean;
   setOpenVN: (open: boolean) => void;

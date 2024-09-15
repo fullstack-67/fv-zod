@@ -4,21 +4,22 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import axios from "axios";
-import { formSchema, type Form } from "../utils/types";
+import { formSchema, type Form } from "../utils/schema";
 import { URL_DATA } from "../utils/env";
-import { getInitData } from "../utils/helper";
+import { getInitData } from "../utils/helperFns";
 import styles from "../styles/style.module.css";
 
 const modalStyles: Styles = {
   overlay: {
     backdropFilter: "blur(2px)",
+    overflowY: "scroll",
   },
   content: {
     background: "#033452",
     overflowY: "auto",
     width: "80%",
+    margin: "2rem auto",
     height: "fit-content",
-    transform: "translate(10%, 10%)",
     borderRadius: "0.75rem",
     borderColor: "#48536B",
     padding: "2rem",
