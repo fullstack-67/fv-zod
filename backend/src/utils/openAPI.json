@@ -146,6 +146,40 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "Create user",
+                "summary": "Create user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Reset sucessfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "required": [
+                                        "status"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/users_wrong": {
@@ -170,15 +204,6 @@
             "post": {
                 "description": "Reset users to initial data",
                 "summary": "Reset users to initial data",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserCreate"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
                         "description": "Reset sucessfully",

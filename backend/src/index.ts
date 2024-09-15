@@ -4,12 +4,7 @@ import express from "express";
 import cors from "cors";
 import dayjs from "dayjs";
 import { PORT } from "./utils/env.js";
-import {
-  zUserBase,
-  zUsersRes,
-  zUsersCreateReq,
-  zUsersWrongRes,
-} from "./schema.js";
+import { zUsersRes, zUsersCreateReq, zUsersWrongRes } from "./schema.js";
 import { validateData } from "./validation.js";
 import { nanoid } from "nanoid";
 import swaggerUi from "swagger-ui-express";

@@ -18,16 +18,13 @@ const registry = new OpenAPIRegistry();
 
 const UsersResSchema = zUsersRes.openapi("Users");
 const UsersWrongResSchema = zUsersWrongRes.openapi("UsersWrong");
-const UsersCreateReqSchema = zUsersCreateReq.openapi("UserCreate");
+const UserCreateReqSchema = zUsersCreateReq.openapi("UserCreate");
 
 registry.registerPath({
   method: "get",
   path: "/users",
   description: "Get all users",
   summary: "Get all users",
-  request: {
-    params: z.object({}),
-  },
   responses: {
     200: {
       description: "User data array",
@@ -45,9 +42,6 @@ registry.registerPath({
   path: "/users_wrong",
   description: "Get all users",
   summary: "Get all users",
-  request: {
-    params: z.object({}),
-  },
   responses: {
     200: {
       description: "User data array",
@@ -62,18 +56,39 @@ registry.registerPath({
 
 registry.registerPath({
   method: "post",
-  path: "/users/reset",
-  description: "Reset users to initial data",
-  summary: "Reset users to initial data",
+  path: "/users",
+  description: "Create user",
+  summary: "Create user",
   request: {
     body: {
       content: {
         "application/json": {
-          schema: UsersCreateReqSchema,
+          schema: UserCreateReqSchema,
         },
       },
     },
   },
+  responses: {
+    200: {
+      description: "Reset sucessfully",
+      content: {
+        "application/json": {
+          schema: z.object({
+            status: z.string().openapi({
+              example: "success",
+            }),
+          }),
+        },
+      },
+    },
+  },
+});
+
+registry.registerPath({
+  method: "post",
+  path: "/users/reset",
+  description: "Reset users to initial data",
+  summary: "Reset users to initial data",
   responses: {
     200: {
       description: "Reset sucessfully",
