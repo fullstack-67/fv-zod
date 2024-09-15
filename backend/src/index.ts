@@ -4,45 +4,68 @@ import express from "express";
 import cors from "cors";
 import dayjs from "dayjs";
 import { PORT } from "./utils/env.js";
-import { zUsersRes, zUsersCreateReq, zUsersWrongRes } from "./schema.js";
+import { getOpenApiDocumentation, writeDocumentation } from "./openAPI.js"; // Note that this line needs to come before import from schema.js due to extendZodWithOpenApi(z) line.
+import {
+  zUsersRes,
+  zUsersWrongRes,
+  zUsersCreateReq,
+  zUsersCreateRes,
+  zUsersResetRes,
+} from "./schema.js";
 import { validateData } from "./validation.js";
 import { nanoid } from "nanoid";
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "./utils/openAPI.json";
+import { initData } from "./utils/initData.js";
+import { registry } from "./openAPI.js";
 
 const debug = Debug("myapp");
 const app = express();
 app.use(cors({ origin: false }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-const initData = [
-  {
-    id: nanoid(),
-    createdAt: new Date().getTime(),
-    firstName: "John",
-    lastName: "Doe",
-    dateOfBirth: dayjs("1980-01-01").format("YYYY-MM-DD"),
-    email: "join_doe@example.com",
-  },
-  {
-    id: nanoid(),
-    createdAt: new Date().getTime(),
-    firstName: "Sarah",
-    lastName: "Smith",
-    dateOfBirth: dayjs("1975-07-26").format("YYYY-MM-DD"),
-    email: "sarah_smith@example.com",
-  },
-];
 let data = [...initData];
 
 // * Endpoints
+
+registry.registerPath({
+  method: "get",
+  path: "/users",
+  description: "Get all users",
+  summary: "Get all users",
+  responses: {
+    200: {
+      description: "User data array",
+      content: {
+        "application/json": {
+          schema: zUsersRes,
+        },
+      },
+    },
+  },
+});
 app.get("/users", (req, res) => {
   // Remove password field
   res.json(zUsersRes.parse(data));
 });
 
+registry.registerPath({
+  method: "get",
+  path: "/users_wrong",
+  description: "Get all users",
+  summary: "Get all users",
+  responses: {
+    200: {
+      description: "User data array",
+      content: {
+        "application/json": {
+          schema: zUsersWrongRes,
+        },
+      },
+    },
+  },
+});
 app.get("/users_wrong", (req, res) => {
   const dataNew = data.map((d) => {
     const { firstName, lastName, dateOfBirth, ...rest } = d;
@@ -56,6 +79,31 @@ app.get("/users_wrong", (req, res) => {
   res.send(zUsersWrongRes.parse(dataNew));
 });
 
+registry.registerPath({
+  method: "post",
+  path: "/users",
+  description: "Create user",
+  summary: "Create user",
+  request: {
+    body: {
+      content: {
+        "application/json": {
+          schema: zUsersCreateReq,
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: "Reset sucessfully",
+      content: {
+        "application/json": {
+          schema: zUsersCreateRes,
+        },
+      },
+    },
+  },
+});
 app.post("/users", validateData(zUsersCreateReq), async (req, res, next) => {
   setTimeout(() => {
     const { password, confirmPassword, ...rest } = req.body;
@@ -69,10 +117,35 @@ app.post("/users", validateData(zUsersCreateReq), async (req, res, next) => {
   }, 2000);
 });
 
+registry.registerPath({
+  method: "post",
+  path: "/users/reset",
+  description: "Reset users to initial data",
+  summary: "Reset users to initial data",
+  responses: {
+    200: {
+      description: "Reset sucessfully",
+      content: {
+        "application/json": {
+          schema: zUsersResetRes,
+        },
+      },
+    },
+  },
+});
 app.post("/users/reset", async (req, res, next) => {
   data = [...initData];
   return res.send({ status: "success" });
 });
+
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(getOpenApiDocumentation())
+);
+
+// If you want to see the OpenAPI json, you need to run this function without nodemon or else the server will keep restarting.
+// writeDocumentation();
 
 // * Running app
 app.listen(PORT, async () => {

@@ -1,11 +1,14 @@
 import { z } from "zod";
 import dayjs from "dayjs";
-
+import { nanoid } from "nanoid";
 const thisYear = dayjs().year();
 
 export const zUserBase = z.object({
-  id: z.string().min(1, { message: "Missing ID" }),
-  createdAt: z.number(),
+  id: z
+    .string()
+    .min(1, { message: "Missing ID" })
+    .openapi({ example: nanoid() }),
+  createdAt: z.number().openapi({ example: new Date().getTime() }),
   firstName: z.string().min(1, { message: "Missing firstname" }),
   lastName: z.string().min(1, { message: "Missing lastname" }),
   email: z.string().email({ message: "Invalid email" }),
@@ -33,7 +36,8 @@ export const zUserBase = z.object({
         return true;
       },
       { message: "Year too far back" }
-    ),
+    )
+    .openapi({ example: "2024-01-01" }),
   password: z.string().min(4, { message: "Password too short" }),
 });
 
@@ -50,6 +54,11 @@ export const zUsersCreateReq = zUserBase
     message: "Passwords don't match",
     path: ["confirmPassword"],
   });
+export const zUsersCreateRes = z.object({
+  status: z.string().openapi({
+    example: "success",
+  }),
+});
 
 // Get user_wrong
 export const zUsersWrongRes = z.array(
@@ -66,3 +75,6 @@ export const zUsersWrongRes = z.array(
       dateOfBirth: z.string(),
     })
 );
+
+// Reset
+export const zUsersResetRes = zUsersCreateRes;
