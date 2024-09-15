@@ -4,15 +4,23 @@ import express from "express";
 import cors from "cors";
 import dayjs from "dayjs";
 import { PORT } from "./utils/env.js";
-import { userSchema } from "./schema.js";
+import {
+  zUserBase,
+  zUsersRes,
+  zUsersCreateReq,
+  zUsersWrongRes,
+} from "./schema.js";
 import { validateData } from "./validation.js";
 import { nanoid } from "nanoid";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "./utils/openAPI.json";
 
 const debug = Debug("myapp");
 const app = express();
 app.use(cors({ origin: false }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const initData = [
   {
@@ -36,7 +44,8 @@ let data = [...initData];
 
 // * Endpoints
 app.get("/users", (req, res) => {
-  res.json(data);
+  // Remove password field
+  res.json(zUsersRes.parse(data));
 });
 
 app.get("/users_wrong", (req, res) => {
@@ -49,13 +58,17 @@ app.get("/users_wrong", (req, res) => {
       dateOfBirth: dayjs(dateOfBirth).add(543, "year").format("YYYY-MM-DD"),
     };
   });
-  res.send(dataNew);
+  res.send(zUsersWrongRes.parse(dataNew));
 });
 
-app.post("/users", validateData(userSchema), async (req, res, next) => {
+app.post("/users", validateData(zUsersCreateReq), async (req, res, next) => {
   setTimeout(() => {
     const { password, confirmPassword, ...rest } = req.body;
-    const newData = { id: nanoid(), createdAt: new Date().getTime(), ...rest };
+    const newData = {
+      id: nanoid(),
+      createdAt: new Date().getTime(),
+      ...rest,
+    };
     data = [newData, ...data];
     return res.send({ status: "success" });
   }, 2000);
