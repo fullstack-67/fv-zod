@@ -6,4 +6,8 @@ if (!URL_DATA) {
   throw new Error("No URL_DATA");
 }
 
-console.log({ URL_DATA, enableInitialFakeData });
+let refetchInterval = parseInt(import.meta.env.VITE_REFETCH_INTERVAL ?? "1000");
+if (isNaN(refetchInterval)) refetchInterval = 1000;
+export { refetchInterval };
+
+console.log({ URL_DATA, enableInitialFakeData, refetchInterval });

@@ -1,7 +1,7 @@
 import useStore from "./store";
 import { useEffect } from "react";
 import axios from "axios";
-import { URL_DATA } from "../utils/env";
+import { URL_DATA, refetchInterval } from "../utils/env";
 import { type User, usersSchema } from "../utils/schema";
 import { useQuery } from "@tanstack/react-query";
 
@@ -31,7 +31,7 @@ function useUsers() {
   const query = useQuery({
     queryKey: ["users"],
     queryFn: fetchUsers,
-    refetchInterval: 1000,
+    refetchInterval: refetchInterval,
   });
 
   useEffect(() => {
