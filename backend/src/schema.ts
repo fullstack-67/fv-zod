@@ -1,7 +1,9 @@
 import { z } from "zod";
 import dayjs from "dayjs";
 import { nanoid } from "nanoid";
-const thisYear = dayjs().year();
+
+const yearUpper = dayjs().year();
+const yearLower = yearUpper - 100;
 
 export const zUserBase = z.object({
   id: z
@@ -23,19 +25,16 @@ export const zUserBase = z.object({
     // })
     .refine(
       (s) => {
-        if (dayjs(s).year() > thisYear) return false;
-        return true;
+        const year = dayjs(s).year();
+        if (year < yearLower || year > yearUpper) {
+          return false; // Trigger error
+        } else {
+          return true;
+        }
       },
       {
-        message: "Wrong calendar",
+        message: `Year not between ${yearLower} to ${yearUpper}`,
       }
-    )
-    .refine(
-      (s) => {
-        if (dayjs(s).year() < thisYear - 100) return false;
-        return true;
-      },
-      { message: "Year too far back" }
     )
     .openapi({ example: "2024-01-01" }),
   password: z.string().min(4, { message: "Password too short" }),

@@ -138,6 +138,8 @@ app.post("/users/reset", async (req, res, next) => {
   return res.send({ status: "success" });
 });
 
+app.get("/", (req, res, next) => res.send("It is working!"));
+
 app.use(
   "/api-docs",
   swaggerUi.serve,

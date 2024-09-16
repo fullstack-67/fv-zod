@@ -1,7 +1,8 @@
 import * as z from "zod";
 import dayjs from "dayjs";
 
-const thisYear = dayjs().year();
+const yearUpper = dayjs().year();
+const yearLower = yearUpper - 100;
 
 const userSchema = z.object({
   id: z.string().min(1, { message: "Missing ID" }),
@@ -20,19 +21,16 @@ const userSchema = z.object({
     // })
     .refine(
       (s) => {
-        if (dayjs(s).year() > thisYear) return false;
-        return true;
+        const year = dayjs(s).year();
+        if (year < yearLower || year > yearUpper) {
+          return false; // Trigger error
+        } else {
+          return true;
+        }
       },
       {
-        message: "Wrong calendar",
+        message: `Year not between ${yearLower} to ${yearUpper}`,
       }
-    )
-    .refine(
-      (s) => {
-        if (dayjs(s).year() < thisYear - 100) return false;
-        return true;
-      },
-      { message: "Year too far back" }
     ),
 });
 
