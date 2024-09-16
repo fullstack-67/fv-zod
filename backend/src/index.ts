@@ -34,6 +34,7 @@ registry.registerPath({
   path: "/users",
   description: "Get all users",
   summary: "Get all users",
+  tags: ["Right"],
   responses: {
     200: {
       description: "User data array",
@@ -55,6 +56,7 @@ registry.registerPath({
   path: "/users_wrong",
   description: "Get all users",
   summary: "Get all users",
+  tags: ["Wrong"],
   responses: {
     200: {
       description: "User data array",
@@ -84,6 +86,7 @@ registry.registerPath({
   path: "/users",
   description: "Create user",
   summary: "Create user",
+  tags: ["Right"],
   request: {
     body: {
       content: {
@@ -122,6 +125,7 @@ registry.registerPath({
   path: "/users/reset",
   description: "Reset users to initial data",
   summary: "Reset users to initial data",
+  tags: ["Utility"],
   responses: {
     200: {
       description: "Reset sucessfully",
@@ -145,9 +149,7 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(getOpenApiDocumentation())
 );
-
-// If you want to see the OpenAPI json, you need to run this function without nodemon or else the server will keep restarting.
-// writeDocumentation();
+writeDocumentation();
 
 // * Running app
 app.listen(PORT, async () => {
