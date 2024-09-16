@@ -3,7 +3,7 @@ import Debug from "debug";
 import express from "express";
 import cors from "cors";
 import dayjs from "dayjs";
-import { PORT } from "./utils/env.js";
+import { PORT, NODE_ENV } from "./utils/env.js";
 import { getOpenApiDocumentation, writeDocumentation } from "./openAPI.js"; // Note that this line needs to come before import from schema.js due to extendZodWithOpenApi(z) line.
 import {
   zUsersRes,
@@ -149,7 +149,7 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(getOpenApiDocumentation())
 );
-writeDocumentation();
+if (NODE_ENV === "development") writeDocumentation();
 
 // * Running app
 app.listen(PORT, async () => {
