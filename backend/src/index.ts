@@ -11,6 +11,7 @@ import {
   zUsersCreateReq,
   zUsersCreateRes,
   zUsersResetRes,
+  UserCreateReq,
 } from "./schema.js";
 import { validateData } from "./validation.js";
 import { nanoid } from "nanoid";
@@ -23,7 +24,6 @@ const app = express();
 app.use(cors({ origin: false }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 let data = [...initData];
 
@@ -47,7 +47,6 @@ registry.registerPath({
   },
 });
 app.get("/users", (req, res) => {
-  // Remove password field
   res.json(zUsersRes.parse(data));
 });
 
@@ -109,7 +108,14 @@ registry.registerPath({
 });
 app.post("/users", validateData(zUsersCreateReq), async (req, res, next) => {
   setTimeout(() => {
-    const { confirmPassword, ...rest } = req.body;
+    const { confirmPassword, ...rest } = req.body as UserCreateReq;
+    // This will fail if undefined.
+    debug(rest.firstName.toUpperCase());
+    debug(rest.lastName.toUpperCase());
+    debug(rest.password.toUpperCase());
+    debug(rest.dateOfBirth.toUpperCase());
+    debug(rest.email.toUpperCase());
+    //
     const newData = {
       id: nanoid(),
       createdAt: new Date().getTime(),

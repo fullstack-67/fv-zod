@@ -58,6 +58,7 @@ export const zUsersCreateRes = z.object({
     example: "success",
   }),
 });
+export type UserCreateReq = z.infer<typeof zUsersCreateReq>;
 
 // Get user_wrong
 export const zUsersWrongRes = z.array(
