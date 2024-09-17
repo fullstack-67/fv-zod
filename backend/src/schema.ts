@@ -11,18 +11,24 @@ export const zUserBase = z.object({
     .min(1, { message: "Missing ID" })
     .openapi({ example: nanoid() }),
   createdAt: z.number().openapi({ example: new Date().getTime() }),
-  firstName: z.string().min(1, { message: "Missing firstname" }),
-  lastName: z.string().min(1, { message: "Missing lastname" }),
-  email: z.string().email({ message: "Invalid email" }),
+  firstName: z
+    .string()
+    .min(1, { message: "Missing firstname" })
+    .openapi({ example: "Tom" }),
+  lastName: z
+    .string()
+    .min(1, { message: "Missing lastname" })
+    .openapi({ example: "Hardy" }),
+  email: z
+    .string()
+    .email({ message: "Invalid email" })
+    .openapi({ example: "example@gmail.com" }),
   dateOfBirth: z
     .string()
     .min(1, { message: "Missing date of birth" })
     .regex(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/, {
       message: "Use format YYYY-MM-DD.",
     })
-    // .refine((s) => z.coerce.date().safeParse(s).success, {
-    //   message: "Invalid date",
-    // })
     .refine(
       (s) => {
         const year = dayjs(s).year();
@@ -37,7 +43,10 @@ export const zUserBase = z.object({
       }
     )
     .openapi({ example: "2024-01-01" }),
-  password: z.string().min(4, { message: "Password too short" }),
+  password: z
+    .string()
+    .min(4, { message: "Password too short" })
+    .openapi({ example: "123456" }),
 });
 
 // Get user
@@ -47,7 +56,10 @@ export const zUsersRes = z.array(zUserBase.omit({ password: true }));
 export const zUsersCreateReq = zUserBase
   .omit({ id: true, createdAt: true })
   .extend({
-    confirmPassword: z.string().min(1, { message: "Confirm password" }),
+    confirmPassword: z
+      .string()
+      .min(1, { message: "Confirm password" })
+      .openapi({ example: "123456" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -70,9 +82,9 @@ export const zUsersWrongRes = z.array(
       dateOfBirth: true,
     })
     .extend({
-      firstname: z.string(),
-      lastname: z.string(),
-      dateOfBirth: z.string(),
+      firstname: z.string().openapi({ example: "Tom" }),
+      lastname: z.string().openapi({ example: "Hardy" }),
+      dateOfBirth: z.string().openapi({ example: "2567-01-01" }),
     })
 );
 

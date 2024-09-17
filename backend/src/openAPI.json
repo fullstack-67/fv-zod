@@ -1,239 +1,251 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-        "version": "1.0.0",
-        "title": "My API",
-        "description": "This is the API."
-    },
-    "servers": [
-        {
-            "url": "/"
-        }
-    ],
-    "components": {
-        "schemas": {},
-        "parameters": {}
-    },
-    "paths": {
-        "/users": {
-            "get": {
-                "description": "Get all users",
-                "summary": "Get all users",
-                "tags": [
-                    "Right"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "User data array",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "type": "string",
-                                                "minLength": 1,
-                                                "example": "bK8ewydG2UDwqb3qEnx-J"
-                                            },
-                                            "createdAt": {
-                                                "type": "number",
-                                                "example": 1726579156546
-                                            },
-                                            "firstName": {
-                                                "type": "string",
-                                                "minLength": 1
-                                            },
-                                            "lastName": {
-                                                "type": "string",
-                                                "minLength": 1
-                                            },
-                                            "email": {
-                                                "type": "string",
-                                                "format": "email"
-                                            },
-                                            "dateOfBirth": {
-                                                "type": "string",
-                                                "minLength": 1,
-                                                "pattern": "^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$",
-                                                "example": "2024-01-01"
-                                            }
-                                        },
-                                        "required": [
-                                            "id",
-                                            "createdAt",
-                                            "firstName",
-                                            "lastName",
-                                            "email",
-                                            "dateOfBirth"
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Create user",
-                "summary": "Create user",
-                "tags": [
-                    "Right"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "firstName": {
-                                        "type": "string",
-                                        "minLength": 1
-                                    },
-                                    "lastName": {
-                                        "type": "string",
-                                        "minLength": 1
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email"
-                                    },
-                                    "dateOfBirth": {
-                                        "type": "string",
-                                        "minLength": 1,
-                                        "pattern": "^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$",
-                                        "example": "2024-01-01"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "minLength": 4
-                                    },
-                                    "confirmPassword": {
-                                        "type": "string",
-                                        "minLength": 1
-                                    }
-                                },
-                                "required": [
-                                    "firstName",
-                                    "lastName",
-                                    "email",
-                                    "dateOfBirth",
-                                    "password",
-                                    "confirmPassword"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Reset sucessfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "status": {
-                                            "type": "string",
-                                            "example": "success"
-                                        }
-                                    },
-                                    "required": [
-                                        "status"
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/users_wrong": {
-            "get": {
-                "description": "Get all users",
-                "summary": "Get all users",
-                "tags": [
-                    "Wrong"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "User data array",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "type": "string",
-                                                "minLength": 1,
-                                                "example": "bK8ewydG2UDwqb3qEnx-J"
-                                            },
-                                            "createdAt": {
-                                                "type": "number",
-                                                "example": 1726579156546
-                                            },
-                                            "email": {
-                                                "type": "string",
-                                                "format": "email"
-                                            },
-                                            "firstname": {
-                                                "type": "string"
-                                            },
-                                            "lastname": {
-                                                "type": "string"
-                                            },
-                                            "dateOfBirth": {
-                                                "type": "string"
-                                            }
-                                        },
-                                        "required": [
-                                            "id",
-                                            "createdAt",
-                                            "email",
-                                            "firstname",
-                                            "lastname",
-                                            "dateOfBirth"
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/users/reset": {
-            "post": {
-                "description": "Reset users to initial data",
-                "summary": "Reset users to initial data",
-                "tags": [
-                    "Utility"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Reset sucessfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "status": {
-                                            "type": "string",
-                                            "example": "success"
-                                        }
-                                    },
-                                    "required": [
-                                        "status"
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "My API",
+    "description": "This is the API."
+  },
+  "servers": [
+    {
+      "url": "/"
     }
+  ],
+  "components": {
+    "schemas": {},
+    "parameters": {}
+  },
+  "paths": {
+    "/users": {
+      "get": {
+        "description": "Get all users",
+        "summary": "Get all users",
+        "tags": [
+          "Right"
+        ],
+        "responses": {
+          "200": {
+            "description": "User data array",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "example": "DXvIERWlH8FBhDXuC2mHp"
+                      },
+                      "createdAt": {
+                        "type": "number",
+                        "example": 1726615506773
+                      },
+                      "firstName": {
+                        "type": "string",
+                        "minLength": 1,
+                        "example": "Tom"
+                      },
+                      "lastName": {
+                        "type": "string",
+                        "minLength": 1,
+                        "example": "Hardy"
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "example@gmail.com"
+                      },
+                      "dateOfBirth": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$",
+                        "example": "2024-01-01"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "createdAt",
+                      "firstName",
+                      "lastName",
+                      "email",
+                      "dateOfBirth"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Create user",
+        "summary": "Create user",
+        "tags": [
+          "Right"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Tom"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Hardy"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "example@gmail.com"
+                  },
+                  "dateOfBirth": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$",
+                    "example": "2024-01-01"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 4,
+                    "example": "123456"
+                  },
+                  "confirmPassword": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "123456"
+                  }
+                },
+                "required": [
+                  "firstName",
+                  "lastName",
+                  "email",
+                  "dateOfBirth",
+                  "password",
+                  "confirmPassword"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reset sucessfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users_wrong": {
+      "get": {
+        "description": "Get all users",
+        "summary": "Get all users",
+        "tags": [
+          "Wrong"
+        ],
+        "responses": {
+          "200": {
+            "description": "User data array",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "example": "DXvIERWlH8FBhDXuC2mHp"
+                      },
+                      "createdAt": {
+                        "type": "number",
+                        "example": 1726615506773
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "example@gmail.com"
+                      },
+                      "firstname": {
+                        "type": "string",
+                        "example": "Tom"
+                      },
+                      "lastname": {
+                        "type": "string",
+                        "example": "Hardy"
+                      },
+                      "dateOfBirth": {
+                        "type": "string",
+                        "example": "2567-01-01"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "createdAt",
+                      "email",
+                      "firstname",
+                      "lastname",
+                      "dateOfBirth"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/reset": {
+      "post": {
+        "description": "Reset users to initial data",
+        "summary": "Reset users to initial data",
+        "tags": [
+          "Utility"
+        ],
+        "responses": {
+          "200": {
+            "description": "Reset sucessfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

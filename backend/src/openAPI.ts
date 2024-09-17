@@ -30,7 +30,7 @@ export function getOpenApiDocumentation() {
 
 export function writeDocumentation() {
   const docs = getOpenApiDocumentation();
-  const fileContent = JSON.stringify(docs, null, 4);
+  const fileContent = JSON.stringify(docs, null, 2);
   fs.writeFileSync(`${__dirname}/openAPI.json`, fileContent, {
     encoding: "utf-8",
   });
