@@ -9,6 +9,7 @@ export const initData = [
     lastName: "Doe",
     dateOfBirth: dayjs("1980-01-01").format("YYYY-MM-DD"),
     email: "join_doe@example.com",
+    password: "1234",
   },
   {
     id: nanoid(),
@@ -17,5 +18,6 @@ export const initData = [
     lastName: "Smith",
     dateOfBirth: dayjs("1975-07-26").format("YYYY-MM-DD"),
     email: "sarah_smith@example.com",
+    password: "1234",
   },
 ];

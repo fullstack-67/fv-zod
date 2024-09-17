@@ -109,7 +109,7 @@ registry.registerPath({
 });
 app.post("/users", validateData(zUsersCreateReq), async (req, res, next) => {
   setTimeout(() => {
-    const { password, confirmPassword, ...rest } = req.body;
+    const { confirmPassword, ...rest } = req.body;
     const newData = {
       id: nanoid(),
       createdAt: new Date().getTime(),
