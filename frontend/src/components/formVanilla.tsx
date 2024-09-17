@@ -2,7 +2,6 @@ import { FC, useState, useEffect, ChangeEvent } from "react";
 import Modal, { Styles } from "react-modal";
 import useStore from "../hooks/store";
 import axios from "axios";
-import { formSchema } from "../utils/schema";
 import { URL_DATA } from "../utils/env";
 import { getInitData } from "../utils/helperFns";
 
@@ -77,16 +76,6 @@ const FormVanilla: FC = () => {
 
   async function sendData(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
-    const result = formSchema.safeParse(values);
-    if (!result.success) {
-      console.log(result);
-      const errMsg = result.error.issues
-        .map((el) => `• [${el.path[0]}] - ${el.message}`)
-        .join("\n");
-      setError(errMsg);
-      return;
-    }
-
     try {
       await axios.post(URL_DATA, values);
       setOpen(false);
