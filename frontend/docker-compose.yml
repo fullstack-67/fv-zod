@@ -10,10 +10,6 @@ services:
     environment:
       - NGINX_PROXY=${NGINX_PROXY}
       - NGINX_PORT=${NGINX_PORT}
-      - VITE_ENABLE_INITIAL_FAKE_DATA=${VITE_ENABLE_INITIAL_FAKE_DATA}
-      - VITE_URL_DATA=${VITE_URL_DATA}
-      - VITE_REFETCH_INTERVAL=${VITE_REFETCH_INTERVAL}
-
 networks:
   fv-net: # Check by using `docker network ls` command
     external: true
