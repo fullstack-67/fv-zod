@@ -27,8 +27,7 @@ app.use(express.json());
 
 let data = [...initData];
 
-// * Endpoints
-
+// * Endpoint: get users
 registry.registerPath({
   method: "get",
   path: "/users",
@@ -47,9 +46,11 @@ registry.registerPath({
   },
 });
 app.get("/users", (req, res) => {
+  // The response should not contain passwords.
   res.json(zUsersRes.parse(data));
 });
 
+// * Endpoint: get users (wrong format)
 registry.registerPath({
   method: "get",
   path: "/users_wrong",
@@ -77,9 +78,11 @@ app.get("/users_wrong", (req, res) => {
       dateOfBirth: dayjs(dateOfBirth).add(543, "year").format("YYYY-MM-DD"),
     };
   });
+  // The response should not contain passwords.
   res.send(zUsersWrongRes.parse(dataNew));
 });
 
+// * Endpoint: create user
 registry.registerPath({
   method: "post",
   path: "/users",
@@ -115,7 +118,7 @@ app.post("/users", validateData(zUsersCreateReq), async (req, res, next) => {
     debug(rest.password.toUpperCase());
     debug(rest.dateOfBirth.toUpperCase());
     debug(rest.email.toUpperCase());
-    //
+    // Add user
     const newData = {
       id: nanoid(),
       createdAt: new Date().getTime(),
@@ -126,6 +129,7 @@ app.post("/users", validateData(zUsersCreateReq), async (req, res, next) => {
   }, 2000);
 });
 
+// * Endpoint: reset user
 registry.registerPath({
   method: "post",
   path: "/users/reset",
@@ -148,8 +152,10 @@ app.post("/users/reset", async (req, res, next) => {
   return res.send({ status: "success" });
 });
 
+// * Endpoint: hello world
 app.get("/", (req, res, next) => res.send("It is working!"));
 
+// * Endpoints: swagger
 app.use(
   "/api-docs",
   swaggerUi.serve,
