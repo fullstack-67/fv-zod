@@ -1,28 +1,16 @@
 import { z } from "zod";
 import dayjs from "dayjs";
-import { nanoid } from "nanoid";
 
 const yearUpper = dayjs().year();
 const yearLower = yearUpper - 100;
 
 export const zUserBase = z.object({
-  id: z
-    .string()
-    .min(1, { message: "Missing ID" })
-    .openapi({ example: nanoid() }),
-  createdAt: z.number().openapi({ example: new Date().getTime() }),
-  firstName: z
-    .string()
-    .min(1, { message: "Missing firstname" })
-    .openapi({ example: "Tom" }),
-  lastName: z
-    .string()
-    .min(1, { message: "Missing lastname" })
-    .openapi({ example: "Hardy" }),
-  email: z
-    .string()
-    .email({ message: "Invalid email" })
-    .openapi({ example: "example@gmail.com" }),
+  id: z.string().min(1, { message: "Missing ID" }),
+
+  createdAt: z.number(),
+  firstName: z.string().min(1, { message: "Missing firstname" }),
+  lastName: z.string().min(1, { message: "Missing lastname" }),
+  email: z.string().email({ message: "Invalid email" }),
   dateOfBirth: z
     .string()
     .min(1, { message: "Missing date of birth" })
@@ -41,12 +29,8 @@ export const zUserBase = z.object({
       {
         message: `Year not between ${yearLower} to ${yearUpper}`,
       }
-    )
-    .openapi({ example: "2024-01-01" }),
-  password: z
-    .string()
-    .min(4, { message: "Password too short" })
-    .openapi({ example: "123456" }),
+    ),
+  password: z.string().min(4, { message: "Password too short" }),
 });
 
 // Get user
@@ -56,19 +40,14 @@ export const zUsersRes = z.array(zUserBase.omit({ password: true }));
 export const zUsersCreateReq = zUserBase
   .omit({ id: true, createdAt: true })
   .extend({
-    confirmPassword: z
-      .string()
-      .min(1, { message: "Confirm password" })
-      .openapi({ example: "123456" }),
+    confirmPassword: z.string().min(1, { message: "Confirm password" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
   });
 export const zUsersCreateRes = z.object({
-  status: z.string().openapi({
-    example: "success",
-  }),
+  status: z.string(),
 });
 export type UserCreateReq = z.infer<typeof zUsersCreateReq>;
 
@@ -82,9 +61,9 @@ export const zUsersWrongRes = z.array(
       dateOfBirth: true,
     })
     .extend({
-      firstname: z.string().openapi({ example: "Tom" }),
-      lastname: z.string().openapi({ example: "Hardy" }),
-      dateOfBirth: z.string().openapi({ example: "2567-01-01" }),
+      firstname: z.string(),
+      lastname: z.string(),
+      dateOfBirth: z.string(),
     })
 );
 

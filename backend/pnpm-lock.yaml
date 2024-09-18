@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@asteasolutions/zod-to-openapi':
-        specifier: ^7.1.1
-        version: 7.1.1(zod@3.23.8)
       cors:
         specifier: ^2.8.5
         version: 2.8.5
@@ -32,9 +29,6 @@ importers:
       nanoid:
         specifier: ^5.0.7
         version: 5.0.7
-      swagger-ui-express:
-        specifier: ^5.0.1
-        version: 5.0.1(express@4.19.2)
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -54,9 +48,6 @@ importers:
       '@types/node':
         specifier: ^22.5.1
         version: 22.5.1
-      '@types/swagger-ui-express':
-        specifier: ^4.1.6
-        version: 4.1.6
       nodemon:
         specifier: ^3.1.4
         version: 3.1.4
@@ -71,11 +62,6 @@ importers:
         version: 5.5.4
 
 packages:
-
-  '@asteasolutions/zod-to-openapi@7.1.1':
-    resolution: {integrity: sha512-lF0d1gAc0lYLO9/BAGivwTwE2Sh9h6CHuDcbk5KnGBfIuAsAkDC+Fdat4dkQY3CS/zUWKHRmFEma0B7X132Ymw==}
-    peerDependencies:
-      zod: ^3.20.2
 
   '@esbuild/aix-ppc64@0.23.1':
     resolution: {integrity: sha512-6VhYk1diRqrhBAqpJEdjASR/+WVRtfjpqKuNw11cLiaWpAT/Uu+nokB+UJnevzy/P9C/ty6AOe0dwueMrGh/iQ==}
@@ -277,9 +263,6 @@ packages:
 
   '@types/serve-static@1.15.7':
     resolution: {integrity: sha512-W8Ym+h8nhuRwaKPaDw34QUkwsGi6Rc4yYqvKFo5rm2FUEhCFbzVWrxXUxuKK8TASjWsysJY0nsmNCGhCOIsrOw==}
-
-  '@types/swagger-ui-express@4.1.6':
-    resolution: {integrity: sha512-UVSiGYXa5IzdJJG3hrc86e8KdZWLYxyEsVoUI4iPXc7CO4VZ3AfNP8d/8+hrDRIqz+HAaSMtZSqAsF3Nq2X/Dg==}
 
   accepts@1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
@@ -610,9 +593,6 @@ packages:
     resolution: {integrity: sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==}
     engines: {node: '>= 0.8'}
 
-  openapi3-ts@4.4.0:
-    resolution: {integrity: sha512-9asTNB9IkKEzWMcHmVZE7Ts3kC9G7AFHfs8i7caD8HbI76gEjdkId4z/AkP83xdZsH7PLAnnbl47qZkXuxpArw==}
-
   parseurl@1.3.3:
     resolution: {integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==}
     engines: {node: '>= 0.8'}
@@ -718,15 +698,6 @@ packages:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
     engines: {node: '>=4'}
 
-  swagger-ui-dist@5.17.14:
-    resolution: {integrity: sha512-CVbSfaLpstV65OnSjbXfVd6Sta3q3F7Cj/yYuvHMp1P90LztOLs6PfUnKEVAeiIVQt9u2SaPwv0LiH/OyMjHRw==}
-
-  swagger-ui-express@5.0.1:
-    resolution: {integrity: sha512-SrNU3RiBGTLLmFU8GIJdOdanJTl4TOmT27tt3bWWHppqYmAZ6IDuEuBvMU6nZq0zLEe6b/1rACXCgLZqO6ZfrA==}
-    engines: {node: '>= v0.10.32'}
-    peerDependencies:
-      express: '>=4.0.0 || >=5.0.0-beta'
-
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
@@ -775,20 +746,10 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  yaml@2.5.1:
-    resolution: {integrity: sha512-bLQOjaX/ADgQ20isPJRvF0iRUHIxVhYvr53Of7wGcWlO2jvtUlH5m87DsmulFVxRpNLOnI4tB6p/oh8D7kpn9Q==}
-    engines: {node: '>= 14'}
-    hasBin: true
-
   zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
 snapshots:
-
-  '@asteasolutions/zod-to-openapi@7.1.1(zod@3.23.8)':
-    dependencies:
-      openapi3-ts: 4.4.0
-      zod: 3.23.8
 
   '@esbuild/aix-ppc64@0.23.1':
     optional: true
@@ -931,11 +892,6 @@ snapshots:
       '@types/http-errors': 2.0.4
       '@types/node': 22.5.1
       '@types/send': 0.17.4
-
-  '@types/swagger-ui-express@4.1.6':
-    dependencies:
-      '@types/express': 4.17.21
-      '@types/serve-static': 1.15.7
 
   accepts@1.3.8:
     dependencies:
@@ -1301,10 +1257,6 @@ snapshots:
     dependencies:
       ee-first: 1.1.1
 
-  openapi3-ts@4.4.0:
-    dependencies:
-      yaml: 2.5.1
-
   parseurl@1.3.3: {}
 
   path-to-regexp@0.1.7: {}
@@ -1416,13 +1368,6 @@ snapshots:
     dependencies:
       has-flag: 3.0.0
 
-  swagger-ui-dist@5.17.14: {}
-
-  swagger-ui-express@5.0.1(express@4.19.2):
-    dependencies:
-      express: 4.19.2
-      swagger-ui-dist: 5.17.14
-
   to-regex-range@5.0.1:
     dependencies:
       is-number: 7.0.0
@@ -1463,7 +1408,5 @@ snapshots:
   utils-merge@1.0.1: {}
 
   vary@1.1.2: {}
-
-  yaml@2.5.1: {}
 
   zod@3.23.8: {}
