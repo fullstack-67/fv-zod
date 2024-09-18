@@ -14,6 +14,8 @@ function useUsers() {
 
   async function fetchUsers() {
     const res = await axios.get<User[]>(URL_DATA);
+
+    // Validation from Zod
     const result = usersSchema.safeParse(res.data);
 
     if (!result.success) {
@@ -23,7 +25,9 @@ function useUsers() {
       return Promise.reject(errorMsg);
     }
 
+    // Notice that result.data has the correct type.
     const usersSorted = result.data.sort((a, b) => b.createdAt - a.createdAt);
+
     setUsers(usersSorted);
     return null; // I don't need react query to return data.
   }
