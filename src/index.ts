@@ -14,8 +14,7 @@ const s1 = z.string();
 
 // ! Safe parsing
 // * "safe" parsing (doesn't throw error if validation fails)
-// log(s1.safeParse("tuna")); // => { success: true; data: "tuna" }
-// log(s1.safeParse(12)); // => { success: false; error: ZodError }
+// log(JSON.stringify(s1.safeParse("tuna"), null, 2));
 // log(JSON.stringify(s1.safeParse(12), null, 2));
 
 // ! Object
