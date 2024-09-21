@@ -10,7 +10,7 @@ const s1 = z.string();
 
 // ! Parsing
 // log(s1.parse("tuna")); // => "tuna"
-// mySchema.parse(12); // => throws ZodError
+s1.parse(12); // => throws ZodError
 
 // ! Safe parsing
 // * "safe" parsing (doesn't throw error if validation fails)
