@@ -36,7 +36,7 @@ const FormRHF = () => {
   const rhf = useForm<Form>({
     resolver: zodResolver(formSchema),
     defaultValues: getInitData(),
-    mode: "onTouched", // Try onSubmit
+    mode: "onTouched", // Try "onSubmit".  Don't forget to remove button disabled logic to make it clickable.
   });
   const { register, handleSubmit, watch, reset, setValue, formState } = rhf;
   const { errors, isSubmitting, isValid } = formState;
