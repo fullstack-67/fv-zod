@@ -40,7 +40,12 @@ const FormRHF = () => {
   });
   const { register, handleSubmit, watch, reset, setValue, formState } = rhf;
   const { errors, isSubmitting, isValid } = formState;
-  // const values = watch();
+  // console.log({
+  //   a_rhf: rhf,
+  //   b_formState: formState,
+  //   c_watch: watch(),
+  //   d_register: register("firstName"),
+  // });
 
   async function sendData(data: Form) {
     try {
